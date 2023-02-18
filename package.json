@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/sergiusz-x/discord-webcam-bot#readme",
   "dependencies": {
-    "node-webcam": "^0.8.1"
+    "enhanced-node-webcam": "^2.1.1",
+    "jimp": "^0.22.4",
+    "node-webcam": "^0.8.1",
+    "sharp": "^0.31.3"
   }
 }

@@ -1,7 +1,8 @@
 const NodeWebcam = require("node-webcam");
-const { WebhookClient } = require("discord.js")
+const Jimp = require("jimp");
+const { WebhookClient, MessageEmbed, MessageAttachment } = require("discord.js")
 
-const url = "https://discord.com/api/webhooks/1067492703518072852/kNvhEACfed6Zz5omR2ckzFDG-7Po0j0d-ZSq9XxVTG8wwjdYkKNXOtthN4HgWpVfElAi"
+const url = "URL"
 const hook = new WebhookClient({url: url})
 //
 var options = {
@@ -19,7 +20,7 @@ var options = {
     //Currently only on windows
     delay: 0,
     //Save shots in memory
-    saveShots: true,
+    saveShots: false,
     // [jpeg, png] support varies
     // Webcam.OutputTypes
     output: "png",
@@ -35,13 +36,19 @@ var options = {
 };
 const Webcam = NodeWebcam.create(options);
 Webcam.capture( "test_picture", function( err, data ) {
-    console.log(data)
-    hook.send({content: `hello`, files: [`${__dirname}/test_picture.png`] }).then(msg => { null })
+    Jimp.read("test_picture.png", (err, lenna) => {
+        if (err) throw err;
+        lenna.write("image.jpg")
+        setTimeout(() => {
+            hook.send({content: `hello`, files: [`${__dirname}/image.jpg`] }).then(msg => { null })
+        }, 500);
+    });
 } );
 
 async function run() {
     const cam = await get_cam()
     // cam.capture( "test_picture", function( err, data ) {} );
+    
 }
 
 function get_cam() {
