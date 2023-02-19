@@ -2,8 +2,8 @@ const NodeWebcam = require("node-webcam");
 const Jimp = require("jimp");
 const { WebhookClient, MessageEmbed, MessageAttachment } = require("discord.js")
 
-const url = "URL"
-const hook = new WebhookClient({url: url})
+const { webhook_url } = require("./config.js")
+const hook = new WebhookClient({url: webhook_url})
 //
 var options = {
     //Picture related
