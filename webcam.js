@@ -24,5 +24,5 @@ function take_and_save_image() {
         })
     })
 }
-
+//
 module.exports = { take_and_save_image }
