@@ -1,63 +1,40 @@
-const NodeWebcam = require("node-webcam");
-const Jimp = require("jimp");
-const { WebhookClient, MessageEmbed, MessageAttachment } = require("discord.js")
-
-const { webhook_url } = require("./config.js")
-const hook = new WebhookClient({url: webhook_url})
+const { Client, GatewayIntentBits, REST, Routes, Collection } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const { bot_token, guild_id } = require("./config.js")
+const fs = require("node:fs")
 //
-var options = {
-    //Picture related
-    width: 1280,
-    height: 720,
-    quality: 100,
-    // Number of frames to capture
-    // More the frames, longer it takes to capture
-    // Use higher framerate for quality. Ex: 60
-    frames: 60,
-    //Delay in seconds to take shot
-    //if the platform supports miliseconds
-    //use a float (0.1)
-    //Currently only on windows
-    delay: 0,
-    //Save shots in memory
-    saveShots: false,
-    // [jpeg, png] support varies
-    // Webcam.OutputTypes
-    output: "png",
-    //Which camera to use
-    //Use Webcam.list() for results
-    //false for default device
-    device: "2",
-    // [location, buffer, base64]
-    // Webcam.CallbackReturnTypes
-    callbackReturn: "location",
-    //Logging
-    verbose: true
-};
-const Webcam = NodeWebcam.create(options);
-Webcam.capture( "test_picture", function( err, data ) {
-    Jimp.read("test_picture.png", (err, lenna) => {
-        if (err) throw err;
-        lenna.write("image.jpg")
-        setTimeout(() => {
-            hook.send({content: `hello`, files: [`${__dirname}/image.jpg`] }).then(msg => { null })
-        }, 500);
-    });
-} );
-
-async function run() {
-    const cam = await get_cam()
-    // cam.capture( "test_picture", function( err, data ) {} );
-    
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+});
+//
+// Bot login
+client.login(bot_token);
+const rest = new REST({ version: '10' }).setToken(bot_token);
+//
+// Load and run commands
+let commands = []
+client.commands = new Collection()
+const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith("command.js"))
+for(const file of commandFiles) {
+    const command = require(`./commands/${file}`)
+    //
+    commands.push(command.data.toJSON())
+    client.commands.set(command.data.name, command)
 }
-
-function get_cam() {
-    return new Promise((res, err) => {
-        Webcam.list(list => {
-            res(NodeWebcam.create( { device: list[1], opts: options } ))
-        });
-    })
-}
-
-run()
-return
+client.once("ready", async () => {
+    try {
+		const data = await rest.put(Routes.applicationGuildCommands(client.user.id, guild_id), { body: commands });
+		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+    } catch (error) {
+        console.error(error);
+    }
+})
+client.on("interactionCreate", async interaction => {
+    if(!interaction.isChatInputCommand()) return
+    //
+    const command = client.commands.get(interaction.commandName)
+    if(command) {
+       await command.execute(interaction)
+    }
+})
+//

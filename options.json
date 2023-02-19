@@ -1,0 +1,12 @@
+{
+    "width": 1280,
+    "height": 720,
+    "quality": 100,
+    "frames": 60,
+    "delay": 0,
+    "saveShots": false,
+    "output": "png",
+    "device": "1",
+    "callbackReturn": "location",
+    "verbose": true
+}
