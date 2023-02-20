@@ -8,5 +8,5 @@
     "output": "png",
     "device": "1",
     "callbackReturn": "location",
-    "verbose": true
+    "verbose": false
 }
