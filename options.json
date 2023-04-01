@@ -6,7 +6,7 @@
     "delay": 0,
     "saveShots": false,
     "output": "png",
-    "device": "1",
+    "device": "2",
     "callbackReturn": "location",
     "verbose": false
 }
