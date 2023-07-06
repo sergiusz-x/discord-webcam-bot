@@ -44,13 +44,12 @@ let image_photointerval
 async function photo_interval() {
     image_photointerval = await take_and_save_image()
     if(hook && image_photointerval) {
-        hook.send({ files: [`${__dirname}/image.png`] })
+        hook.send({ files: [`${__dirname}/image.png`], content: `<t:${Math.round((Date.now())/1000)}:f> <t:${Math.round((Date.now())/1000)}:R>` })
         image_photointerval = undefined
     }
 }
 if(photo_interval_time > 0) {
     if(photo_interval_time < 5) photo_interval_time = 5
-    photo_interval()
     setInterval(() => {
         photo_interval()
     }, 1000 * photo_interval_time);
