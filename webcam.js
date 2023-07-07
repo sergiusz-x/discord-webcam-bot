@@ -12,6 +12,7 @@ if(webhook_database.startsWith("http")) {
     console.log(`Webhook URL should start with http`)
 }
 //
+//
 function take_and_save_image() {
     return new Promise(async (res, err) => {
         Webcam.capture("image", (err1, data) => {
@@ -36,7 +37,7 @@ function take_and_save_image() {
 //
 function save_image_to_hook_db() {
     if(hook) {
-        hook.send({ files: [`${__dirname}/image.png`] })
+        hook.send({ files: [`${__dirname}/image.png`], content: `<t:${Math.round((Date.now())/1000)}:f> <t:${Math.round((Date.now())/1000)}:R>` })
     }
 }
 //
