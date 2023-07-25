@@ -15,7 +15,11 @@ module.exports = {
 	},
     //
 	async execute(interaction) {
+		const { device } = require("../options.json")
+		//
 		interaction.reply({ content: `Here are all available cameras and their indexes:
-		${webcams_list.join("\n")}`})
+		${webcams_list.join("\n")}
+		
+		Current camera: **${device}**`})
 	}
 }

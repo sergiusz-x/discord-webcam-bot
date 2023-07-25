@@ -32,6 +32,11 @@ module.exports = {
 		//
 		fs.writeFileSync(`${__dirname}/../options.json`, JSON.stringify(optionsJSON, null, 4))
 		//
-		interaction.reply({ content: `Successfully changed the webcam!`})
+		interaction.reply({ content: `Successfully changed the webcam!
+		> The bot will restart in 5 sec`})
+		//
+		setTimeout(() => {
+			process.exit(0)
+		}, 5000);
 	}
 }
