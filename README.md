@@ -1,7 +1,7 @@
 
 # 📷 Discord Webcam Bot 📷
 
-This project allows you to send photos from your USB webcam to Discord. Personally, I use it to watch my 🐇 when I'm away from home.
+This project allows you to send photos from your USB webcam to Discord. It also allows to take interval photos every x seconds. Personally, I use it to watch my 🐇 when I'm away from home.
 
 
 ## 📔 Requirements 📔
