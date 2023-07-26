@@ -7,7 +7,7 @@ module.exports = {
 	},
     //
 	async execute(interaction) {
-		interaction.reply({ content: `Taking photo...!`, ephemeral: true })
+		interaction.reply({ content: `Taking photo...!` })
 		//
 		const zdj = await take_and_save_image()
 		//
