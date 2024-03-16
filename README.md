@@ -52,4 +52,4 @@ This project allows you to send photos from your USB webcam to Discord. It also 
 9. Take photo with `/photo` command
 ## 💻 Preview 💻
 
-![Preview](https://media.discordapp.net/attachments/1133735893715386438/1133736441348894850/image.png?width=556&height=702)
+![Preview](/readme/image.png)
